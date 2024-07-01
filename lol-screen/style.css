@@ -110,9 +110,6 @@ body {
   height: 100%;
   padding: 1rem;
 }
-.container-group .container:last-child {
-  flex-grow: 1;
-}
 
 .main-action {
   display: flex;
@@ -404,8 +401,8 @@ body {
 }
 
 .content.top-performances {
-  flex-grow: 1;
   display: flex;
+  width: 200px;
   flex-direction: column;
 }
 .content.top-performances .group span {
