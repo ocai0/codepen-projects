@@ -1,0 +1,425 @@
+/* Initial setup */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: #1b1b1b;
+  font-size: 12px;
+}
+
+* {
+  font-family: "Work Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color: #c4e3f9;
+  --main-color-contrast: #111;
+}
+
+.font-regular {
+  font-weight: 400;
+}
+.font-bold {
+  font-weight: 700;
+}
+
+/* Frame */
+.canvas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.launcher-window {
+  position: relative;
+  display: flex;
+  width: calc(100% - 5em);
+  max-width: 1200px;
+  border-radius: 2.5em;
+  box-shadow: 0 0.3em 0.75em rgba(18, 18, 18, 0.631372549);
+  aspect-ratio: 16/9;
+}
+.launcher-window > * {
+  z-index: 3;
+}
+.launcher-window > .side-bar {
+  flex-grow: 0;
+}
+.launcher-window > .content {
+  flex-grow: 1;
+}
+.launcher-window .images-container {
+  position: absolute;
+  inset: 0 0 0 0;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.launcher-window .images-container::before {
+  z-index: 2;
+  content: "";
+  border-radius: inherit;
+  position: absolute;
+  inset: 0 0 0 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(17, 17, 17, 0.4666666667) 10%, rgba(17, 17, 17, 0.6666666667) 90%);
+}
+.launcher-window .images-container img {
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+  object-position: center;
+  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.launcher-window .images-container img.show {
+  z-index: 1;
+  animation: reveal 1.2s ease-in forwards;
+  transition: all 200ms ease;
+}
+
+.container-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+}
+.container-group .container:last-child {
+  flex-grow: 1;
+}
+
+.main-action {
+  display: flex;
+  align-items: flex-start;
+  margin: auto 0;
+  flex-direction: column;
+}
+.main-action > :nth-child(1) {
+  margin-bottom: 1em;
+}
+.main-action > :nth-child(2) {
+  margin-bottom: 2em;
+}
+
+.game-status {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+  gap: 1em;
+}
+.game-status .game-data {
+  text-transform: uppercase;
+}
+.game-status .game-data > * {
+  display: block;
+  text-align: end;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.15em;
+  font-size: 0.9em;
+}
+.game-status .game-data > *:not(:last-child) {
+  margin-bottom: 0.4em;
+}
+.game-status .game-data > *:last-child {
+  opacity: 0.5;
+  font-size: 0.8em;
+}
+.game-status .container .content {
+  max-width: 3em;
+}
+
+.graph-bar {
+  position: relative;
+  height: calc(100% - 12px);
+  width: 0.8em;
+  border-radius: 0.5em;
+  background-color: rgba(255, 255, 255, 0.2666666667);
+}
+.graph-bar::before {
+  content: "";
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+  height: var(--value);
+  background-color: var(--main-color);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+}
+.graph-bar::after {
+  content: attr(data-legend);
+  font-size: 10px;
+  position: absolute;
+  bottom: 0;
+  left: -50%;
+  width: 100%;
+  color: white;
+  transform: translate(50%, 110%);
+  text-align: center;
+}
+
+/* Component: Dark container with a title above it */
+.container {
+  display: flex;
+  flex-direction: column;
+}
+.container .title {
+  color: rgba(235, 223, 214, 0.4784313725);
+  filter: drop-shadow(0 0 10px black);
+  font-size: 0.75em;
+  margin-bottom: 1.2em;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.container .content {
+  color: #faf5f2;
+  background-color: #000;
+  border-radius: 1.5em;
+  padding: 0.5em;
+  flex-grow: 1;
+}
+.container .content img {
+  border-radius: 100%;
+  max-width: 4em;
+  width: 100%;
+}
+.container .content .group {
+  background-color: rgba(254, 254, 254, 0.0705882353);
+  border-radius: 0.8em;
+  padding: inherit;
+  display: flex;
+}
+
+.badge {
+  text-transform: uppercase;
+  font-size: 0.9em;
+  border: 1px solid rgba(153, 153, 153, 0.5333333333);
+  color: #aaa;
+  padding: 0.6em 0.8em;
+  display: inline-flex;
+  border-radius: 2em;
+}
+
+.action-btn {
+  opacity: 0.5;
+  padding: 0.2em 0.5em 0.2em 1.2em;
+  font-size: 1em;
+  border: 1px solid currentColor;
+  color: #eee;
+  border-radius: 2em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  cursor: pointer;
+  background-color: transparent;
+  transition: all 150ms ease-out;
+  /* :hover rules put below the active to be more important */
+}
+.action-btn.active {
+  opacity: 1;
+  background: var(--main-color);
+  color: var(--main-color-contrast);
+}
+.action-btn.active .icon > img {
+  filter: invert(1);
+}
+.action-btn:hover, .action-btn:focus {
+  opacity: 0.7;
+}
+.action-btn .material-symbols-outlined {
+  font-size: 2em;
+}
+
+.game-logo {
+  filter: invert(1);
+  width: 100%;
+  max-width: 20em;
+}
+
+.side-bar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 64px;
+  border-right: 1px solid rgba(254, 254, 254, 0.062745098);
+  background-color: rgba(17, 17, 17, 0.5333333333);
+  border-radius: inherit;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 0.5em;
+}
+.side-bar.bar-at-right {
+  border-right: unset;
+  border-left: 1px solid rgba(254, 254, 254, 0.062745098);
+  border-radius: inherit;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.side-bar ul {
+  padding: 0.5em;
+  background-color: #111;
+  list-style-type: none;
+  width: 100%;
+  border-radius: 1.8em;
+  margin: 0 0 0.5em;
+  box-sizing: border-box;
+}
+.side-bar ul li {
+  width: 100%;
+  border-radius: 1em;
+  aspect-ratio: 1/1;
+}
+.side-bar ul li:not(:last-child) {
+  margin-bottom: 0.8em;
+}
+.side-bar ul li button {
+  opacity: 0.4;
+  border-radius: 1.2em;
+  background: #444;
+  border: unset;
+  width: 100%;
+  height: 100%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 100ms ease-in;
+}
+.side-bar ul li button.active {
+  opacity: 1;
+  background: var(--main-color);
+  color: var(--main-color-contrast);
+}
+.side-bar ul li button.active .icon > img {
+  filter: invert(1);
+}
+.side-bar ul li button:hover, .side-bar ul li button:focus {
+  opacity: 0.7;
+  cursor: pointer;
+}
+.side-bar ul li button .icon {
+  width: 100%;
+  height: 100%;
+}
+.side-bar ul li button .icon > img {
+  width: 100%;
+  filter: invert(0);
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: filter 300ms ease-in;
+}
+
+.content-group {
+  display: flex;
+  gap: 1em;
+  width: 100%;
+}
+
+.content.current-season {
+  display: flex;
+  gap: 0.25em;
+}
+.content.current-season .rank-image img {
+  object-fit: contain;
+  max-width: 7em;
+  object-position: center;
+  padding: 0.5em;
+}
+.content.current-season .rank-data {
+  padding: 0;
+  flex-direction: column;
+  text-align: center;
+}
+.content.current-season .rank-data span {
+  font-size: 1.3em;
+  margin: auto;
+  padding: 0.8em 1.5em;
+  display: block;
+  letter-spacing: 0.02em;
+}
+.content.current-season .rank-data small {
+  text-transform: uppercase;
+  padding: 1em;
+  border-top: 0.2em solid black;
+  font-size: 0.65em;
+  opacity: 0.5;
+}
+
+.content.weekly-activity .group {
+  align-items: center;
+  gap: 1em;
+}
+.content.weekly-activity .group:not(:last-child) {
+  margin-bottom: 0.2em;
+}
+.content.weekly-activity .group:last-child span {
+  margin: auto;
+  opacity: 0.5;
+  padding: 0.5em 1em;
+  text-transform: uppercase;
+  font-size: 0.65em;
+}
+.content.weekly-activity img {
+  border: 0.3em solid black;
+  object-fit: contain;
+  object-position: center;
+}
+.content.weekly-activity .graphs {
+  display: flex;
+  height: 60px;
+  gap: 0.5em;
+}
+
+.content.top-performances {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.content.top-performances .group span {
+  margin: auto;
+  opacity: 0.5;
+  padding: 0.5em 1em;
+  text-transform: uppercase;
+  font-size: 0.65em;
+}
+.content.top-performances .champions-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4em 0 0.6em;
+  margin: auto;
+}
+
+/*Animation: */
+@keyframes reveal {
+  0% {
+    transform: scale(1.03);
+    clip-path: polygon(-50% 65%, 150% 45%, 150% 45%, -50% 65%);
+  }
+  100% {
+    transform: scale(1);
+    clip-path: polygon(-100% -50%, 150% -50%, 150% 150%, -100% 150%);
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
