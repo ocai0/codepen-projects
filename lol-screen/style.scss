@@ -30,8 +30,21 @@ body {
 /* Frame */
 .canvas {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.credit {
+  color: white;
+  a {
+    opacity: .6;
+    color: blueviolet;  
+    text-decoration: none;
+    &:hover, &:focus {
+      opacity: 1;
+    }
+  }
 }
 
 .launcher-window {
